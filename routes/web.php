@@ -16,3 +16,9 @@ Route::get('/overview', function () {
         'title' => 'overview . Schuts',
     ]);
 })->name('overview');
+
+Route::get('/game', function () {
+    return view('game',[
+        'title'=> 'game.Schuts',
+        ]);
+})->name('game');
