@@ -5,21 +5,27 @@
 
             <div>
                 <h1 class="text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
-                    Hi, I'm <span class="text-indigo-600">{{ $owner_firstname }}!</span>
+                    Bonjour, je suis <span class="text-indigo-600">{{ $owner_firstname }} !</span>
                 </h1>
 
                 <p class="mt-6 max-w-2xl text-lg leading-relaxed text-stone-600">
-                    I'm developing this game: <span Class="text-indigo-600"> {{ $game_name }}!</span>
+                    Ce site a été fait pour présenter un de mes projets de jeu vidéo, nommé <span Class="text-indigo-600"> {{ $game_name }}!</span>
+                </p>
+                <p class="mt-6 max-w-2xl text-lg leading-relaxed text-stone-600">
+                    Vous pourrez ici trouver des infos sur la création du projet, l'argencement du code, les défis à relever et plus encore.</span>
+                </p>
+                <p class="mt-6 max-w-2xl text-lg leading-relaxed text-stone-600">
+                    Merci de consulter le site !</span>
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-3">
 
                     <a href="/contact" class="rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
-                        Contact me
+                        Nous contacter
                     </a>
 
                     <a href="/about" class="rounded-lg bg-white px-5 py-3 text-sm font-semibold text-stone-900 shadow-sm ring-1 ring-stone-300 hover:bg-stone-50">
-                        To know more
+                        En savoir plus
                     </a>
 
                 </div>

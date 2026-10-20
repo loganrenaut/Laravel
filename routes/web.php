@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home',[
-        'title'=> 'home . Schuts',
+        'title'=> 'home . SCHÜT',
         'owner_firstname' => config('schuts.owner_firstname'),
         'owner_lastname' => config('schuts.owner_lastname'),
         'game_name'=> config('schuts.game_name'),
