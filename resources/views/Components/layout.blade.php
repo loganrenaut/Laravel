@@ -1,7 +1,7 @@
-@props(['title' => 'Schuts'])
+@props(['title' => 'Schüts'])
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@
             <nav class="mx auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 -x4">
                 <a href="/" class="flex item-center gap-3">
                     <span class="flex size-9 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white">S</span>
-                    <span class="text-lg front-semibold tracking-tight text-stone-900">Schuts</span>
+                    <span class="text-lg front-semibold tracking-tight text-stone-900">Schüts</span>
                 </a>
 
                 <div class="flex gap-1">
