@@ -11,14 +11,15 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/overview', function () {
-    return view('overview',[
-        'title' => 'overview . Schuts',
+Route::get('/contact', function () {
+    return view('contact',[
+        'title' => 'contact . Schuts',
     ]);
-})->name('overview');
+})->name('contact');
 
 Route::get('/game', function () {
     return view('game',[
         'title'=> 'game.Schuts',
+        'game_name' => config('schuts.game_name'),
         ]);
 })->name('game');
