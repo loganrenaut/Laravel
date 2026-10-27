@@ -12,7 +12,7 @@
         @vite(['resources/css/app.css', 'resource/js/app.js'])
     </head>
 
-    <body class="flex min-h-screen flex col bg-stone-50 front-sans text-stone-800 antialiased">
+    <body class="flex min-h-screen flex-col bg-stone-50 front-sans text-stone-800 antialiased">
         <header class="ticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur">
             <nav class="mx auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 -x4">
                 <a href="/" class="flex item-center gap-3">
