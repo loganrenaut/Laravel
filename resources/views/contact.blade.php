@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Contact . Schüts">
 
  <!-- View example, can be modified later  -->
  <main class="mx-auto w-full max-w-5xl flex-1 px-6 py-12 sm:py-16">

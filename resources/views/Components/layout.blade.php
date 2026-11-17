@@ -17,7 +17,7 @@
             <nav class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
                 <a href="/" class="flex item-center gap-3">
                     <span class="flex size-9 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white">S</span>
-                    <span class="text-lg front-bold tracking-tight text-stone-900">Schüts</span>
+                    <span class="text-lg front-semibold tracking-tight text-stone-900">Schüts</span>
                 </a>
 
                 <div class="flex gap-1">
