@@ -12,18 +12,18 @@
 
         @vite(['resources/css/app.css', 'resource/js/app.js'])
     </head>
-
     <body class="flex min-h-screen flex-col bg-stone-50 front-sans text-stone-800 antialiased">
-        <header class="ticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur">
-            <nav class="mx auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 -x4">
+        <header class="sticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur" x-data="{ open: false }">
+            <nav class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
                 <a href="/" class="flex item-center gap-3">
                     <span class="flex size-9 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white">S</span>
-                    <span class="text-lg front-semibold tracking-tight text-stone-900">Schüts</span>
+                    <span class="text-lg front-bold tracking-tight text-stone-900">Schüts</span>
                 </a>
 
                 <div class="flex gap-1">
                     <x-nav-link class="shadow-lg" :href="route('home')" :active="request()->routeIs('home')">Home</x-nav-link>
                     <x-nav-link class="shadow-lg" :href="route('shut')" :active="request()->routeIS('shut')">Schüt</x-nav-link>
+                    <x-nav-link class="shadow-lg" :href="route('projects.index')" :active="request()->routeIS('projects.*')">Projects</x-nav-link>
                     <x-nav-link class="shadow-lg" :href="route('game')" :active="request()->routeIs('game')">Game</x-nav-link>
                     <x-nav-link class="shadow-lg" :href="route('contact')" :active="request()->routeIs('contact')">Contact</x-nav-link>
                     

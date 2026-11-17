@@ -11,9 +11,9 @@
             <div class="space-y-4">
                 <a href="mailto:renaut.logan@icloud.com" class="block rounded-2xl bg-white p-6 shadow-sm ring-1 ring-stone-200 hover:ring-indigo-300">
                     <p class="text-sm font-medium text-stone-600">E-mail</p>
-                    <p class="mt-1 font-semibold text-indigo-600">a.renaut@skolae.fr</p>
-                    <P class="mt-1 font-semibold text-indigo-600">h.lucas@skolae.fr</P>
-                    <P class="mt-1 font-semibold text-indigo-600">a.lao@skolae.fr</P>
+                    <p class="mt-1 font-semibold text-indigo-600">renaut@skolae.fr</p>
+                    <P class="mt-1 font-semibold text-indigo-600">lucas@skolae.fr</P>
+                    <P class="mt-1 font-semibold text-indigo-600">lao@skolae.fr</P>
                 </a>
                 <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-stone-200">
                     <p class="text-sm font-medium text-stone-500">Localisation</p>

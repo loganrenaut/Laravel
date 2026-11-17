@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use app\Http\Controllers\ProjectController;
 
 Route::get('/', function () {
-
     $projects = [
         [
             'id' => 1,
@@ -137,7 +136,7 @@ Route::get('/projects/{id}', function(int $id) {
 
     foreach ($projects as $project) {
         if ($project['id'] === $id) {
-            return view('project.show', compact('project'));
+            return view('projects.show', compact('project'));
         }
     }
     abort(404);

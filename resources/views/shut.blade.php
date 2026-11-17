@@ -1,4 +1,4 @@
-<x-layout title="Home . SCHÜT">
+<x-layout title="Home . Schuts">
     <main class="mx-auto w-full max-w-5xl flex-1 px-6 py-12 sm:py-16">
 
         <section class="grid items-center gap-10 md:grid-cols-[1fr_auto]">
