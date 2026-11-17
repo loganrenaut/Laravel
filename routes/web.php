@@ -48,6 +48,10 @@ Route::get('/contact', function () {
     ]);
 })->name('contact');
 
+Route::get('/shut', function() {
+    return view('shut');
+})->name('shut');
+
 Route::get('/game', function () {
     $faqs = [
         [
@@ -71,3 +75,70 @@ Route::get('/game', function () {
         'game_name' => config('schuts.game_name'),
         ]);
 })->name('game');
+
+Route::get('/projects', function() {
+    $projects = [
+        [
+            'id' => 1,
+            'title' => 'Portfolio ESGI',
+            'description' => 'Personal Website for academic projects, built with Laravel and Tailwind.',
+            'status' => 'en_cours'
+        ],
+        [
+            'id' => 2,
+            'title' => 'Game Code Snippets for Schüts',
+            'description' => 'Snippets of my code that I\'d like to share.',
+            'status' => 'en_cours'
+        ],
+        [
+            'id' => 3,
+            'title' => 'Upcoming features',
+            'description' => 'Tasks management with filters and priorities.',
+            'status' => 'en_cours'
+        ],
+        [
+            'id' => 4,
+            'title' => 'Promotional Blog',
+            'description' => 'Articles about features and upcoming games or updates',
+            'status' => 'en_cours'
+        ],
+    ];
+
+    return view('projects.index', compact('projects'));
+})->name('projects.index');
+
+Route::get('/projects/{id}', function(int $id) {
+    $projects = [
+    [
+            'id' => 1,
+            'title' => 'Portfolio ESGI',
+            'description' => 'Personal Website for academic projects, built with Laravel and Tailwind.',
+            'status' => 'en_cours'
+        ],
+        [
+            'id' => 2,
+            'title' => 'Game Code Snippets for Schüts',
+            'description' => 'Snippets of my code that I\'d like to share.',
+            'status' => 'en_cours'
+        ],
+        [
+            'id' => 3,
+            'title' => 'Upcoming features',
+            'description' => 'Tasks management with filters and priorities.',
+            'status' => 'en_cours'
+        ],
+        [
+            'id' => 4,
+            'title' => 'Promotional Blog',
+            'description' => 'Articles about features and upcoming games or updates',
+            'status' => 'en_cours'
+        ],
+    ];
+
+    foreach ($projects as $project) {
+        if ($project['id'] === $id) {
+            return view('project.show', compact('project'));
+        }
+    }
+    abort(404);
+})->whereNumber('id')->name('projects.show');

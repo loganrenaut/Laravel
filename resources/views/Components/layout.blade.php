@@ -23,8 +23,10 @@
 
                 <div class="flex gap-1">
                     <x-nav-link class="shadow-lg" :href="route('home')" :active="request()->routeIs('home')">Home</x-nav-link>
-                    <x-nav-link class="shadow-lg" :href="route('contact')" :active="request()->routeIs('contact')">Contact</x-nav-link>
+                    <x-nav-link class="shadow-lg" :href="route('shut')" :active="request()->routeIS('shut')">Schüt</x-nav-link>
                     <x-nav-link class="shadow-lg" :href="route('game')" :active="request()->routeIs('game')">Game</x-nav-link>
+                    <x-nav-link class="shadow-lg" :href="route('contact')" :active="request()->routeIs('contact')">Contact</x-nav-link>
+                    
                 </div>
             </nav>
         </header>
