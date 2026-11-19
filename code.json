@@ -239,31 +239,25 @@
 		"description": "Ce code fait automatiquement une chaîne de caractères en fonction des stats de l'arme. Des balises internes à Godot sont utilisées, comme [b] ou [color=] ; elles sont similaires au BBCode. Le code est long et contient énormément de concaténations, mais quand il est utilisé en jeu il est déja entièrement formaté. Pratique !"
 	},
 	{
-		"name": "Mouvement du joueur"
-		"url": "/player-movement"
+		"name": "Effets de rotation"
+		"url": "/rotation-effects"
 		,
 		
-		"code": "		
-			var moveX := Input.get_axis(\"moveLeft\",\"moveRight\"); # X-axis movement code
-			if velocity.x < speedCap * delta and velocity.x > (speedCap * -1) * delta:
-				velocity.x += moveAmount * moveX * delta;
-				# Friction code
-			if velocity.x > 0:
-				velocity.x -= friction * delta
-			elif velocity.x < 0:
-				velocity.x += friction * delta
-		
-			var moveY := Input.get_axis(\"moveUp\",\"moveDown\"); # Same but for the Y-axis.
-			if velocity.y < speedCap * delta and velocity.y > speedCap * -1 * delta:
-				velocity.y += moveAmount * moveY * delta;
-				# Friction code, AGAIN
-			if velocity.y > 0:
-				velocity.y -= friction * delta
-			elif velocity.y < 0:
-				velocity.y += friction * delta
-		
-			move_and_slide()
-		",
+		"code": "
+		var funkyAngle = 0.00005;
+        var funkySize = 0.00015;
+        func funkyScale():
 
-		"description": "Voici le code qui gère le mouevement du joueur sur les deux axes ; j'ai essayé de le rendre aussi compact que possible et de multiplier avec le delta (le temps entre deux frames) afin de rendre le jeu fluide peu importe le framerate."
-	},
+            if rotation < -0.01 or rotation > 0.01:
+                funkyAngle *= -1.0;
+
+            if scale.x >= 1.02 or scale.x <= 0.98:
+                funkySize *= -1.0;
+
+
+            rotation += -funkyAngle;
+            scale = Vector2(scale.x + funkySize, scale.y + funkySize);"
+
+		"description": "Ce code gère la rotation des effets d'UI, comme la barre de vie ou les crédits. Il fonctionne de manière très simple, mais fait un effet très convaincant avec très peu de ressources."
+	}
+}
