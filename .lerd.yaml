@@ -1,3 +1,5 @@
+domains:
+  - schut-blog
 php_version: "8.5"
 node_version: "24"
 framework: laravel
