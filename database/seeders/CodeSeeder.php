@@ -12,6 +12,266 @@ class CodeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+            Code::factory()->create([
+            'name' => "Armes",
+            'code_snippet' => "class_name Weapon
+		
+                extends Node
+                
+                ## The name of the weapon.
+                @export var weaponName 		 : String
+                ## Minimum and maximum damage of the weapon, in a vector2 variable.x is minimum damage, y is maximum damage.
+                @export var damage 	  		 : Vector2i
+                ## How long to wait before the next shot, in seconds.
+                @export var fireRate 		 : float = 1.0
+                ## How many shots will be fired at once. The first shot is always fired at the center, the others will be fired on the side at an angle.
+                @export var shotNumber 		 : int = 1
+                ## How many shots will be fired in succession before the fire delay is up, all spaced at 1/4th of the usual firing delay. Leave at 0 for a single firing cycle.
+                @export var burstFire		 : bool
+                ## The color of the bullet. Completely cosmetic.
+                @export var shotColor 		 : Color = Color.WHITE
+                ## How big the shot will be - the bullet size will be multiplied by that amount.
+                @export var shotSize		 : float = 1.0
+                ## How fast the shot will travel - the bullet speed will be multiplied by that amount.
+                @export var shotSpeed		 : float = 1.0
+                ## How many times the shot will pierce through an enemy. A bullet can only go through an enemy once. It will first pierce, then bounce and reset its pierces, then finally split/explode once the bounces are up.
+                @export var pierceAmount 	 : int
+                ## How many times a shot will bounce back after hitting an enemy or a corner. A bullet will first pierce, then bounce and reset its pierces, then finally split/explode once the bounces are up.
+                @export var bounceAmount 	 : int
+                ## How many bullets a given shot will split into when destroyed. The smaller bullets share every property from their parent, but their damage and size are halved and they can't split.
+                @export var splitAmount		 : int
+                ## How long the bullet will travel, in seconds, before disappearing. If set to 0 (the default), their range will be infinite.
+                @export var shotRange 		 : float = 1.0
+                ## The variance in the spread for every shot, in degrees.
+                @export var spread			 : float
+                
+                ## How much an enemy will be knocked back after being hit by a bullet.
+                @export var knockback		 : float
+                ## The chances for a shot to deal double damage.
+                @export var critRate 		 : float
+                ## The percentage of damage dealt that will be converted into HP.
+                @export var lifeSteal		 : float
+                ## Multiplies how many credits are earned by killing enemies with that weapon by this amount.
+                @export var creditsRate		 : float = 1.0
+                ## Makes a small shield rotate around the player when the weapon is used, blocking enemy shots and dealing damage equal to twice the weapon's damage.
+                @export var homingShots		 : bool
+                ## Instead of shooting the weapon directly, this will instead make a turret that will automatically shoot at the closest enemies.
+                @export var turret			 : bool
+                ## Turn shots on fire, burning enemies and dealing damage over time equal to twice the weapon damage over the course of 3 seconds.
+                @export var burningShots 	 : bool
+                ## Make shots explode with every bounce or at the very end of the bullet's life, at the same time they're splitting. Bouncing explosions deal 1.5 times the weapon damage, while final explosion deal 3 times the weapon damage.
+                @export var explodingShots 	 : bool
+                ## Make shots 'drunk', making them wave around instead of going in a straight line.
+                @export var wobblyShots		 : bool
+                ## Make bullets follow the cursor: They will stop once they make contact with the cursor.
+                @export var shotsFollowCursor: bool
+                
+                ## Negative modifier: How much ammo the weapon will have before it disappears.
+                @export var limitedAmmo		 : int
+                @onready var currentAmmo              : int = limitedAmmo
+                
+                ## Negative modifier: How many credits the weapon will cost per shot.
+                @export var creditCost 		 : int
+                ## Negative modifier: Makes the weapon shatter and disappear if the player is hit while holding it.
+                @export var glassWeapon		 : bool",
+            'description' => "L'atout principal de SCHUTLUT se trouve dans les armes modulaires ; chaque arme a de nombreux modifieurs qui peuvent être changés à tout moment et randomisés. Le code en haut regroupe toutes les variables, qui sont ensuite utilisés dans le code des tirs eux-mêmes pour déterminer leur comportement ; tout est commenté en anglais.",
+
+            'url' => "/armes",
+        ]);
+
+            Code::factory()->create([
+            'name' => "Drop des crédits",
+            'code_snippet' => "func dropCred(creditMult):
+			# Credit spawn code
+			@warning_ignore('arrowing_conversion')
+			var creditBuffer : int = randi_range(creditDrop * 0.95, creditDrop * 1.05) * creditMult
+			var creditThreshold := [1000, 250, 50, 10]
+		
+			for i in creditThreshold: # Thanks, Mr. Antoine!
+				var creditDivider : int = floor(creditBuffer / i)
+				for j in creditDivider:
+					spawnCredits(i);
+				creditBuffer %= i;
+			while creditBuffer > 0:
+				spawnCredits(1);
+				creditBuffer -=1;",
+
+            'description' => "Ce code est executé à la mort de chaque ennemi pour les faire drop de nombreux crédits, comme pour représenter une 'pluie' de crédits. Ce code a une histoire intéressante ; à l'origine, il s'agissait d'une boucle for qui réduisait le buffer de crédits par 250, 100, 50, 25 ou 1 puis rebouclait - ça marchait, mais c'était très peu efficace. Durant mes cours d'algorithme en première année, monsieur Antoine nous a fait faire un exercice pour rendre la monnaie ; la première solution était similaire à ce que je viens de décrire, mais la seconde utilisait des divisions et des modulos et était bien plus optimisée. Ça m'a donc inspiré pour refaire le code ici !",
+
+            'url' => "/credit-drops",
+        ]);
+            Code::factory()->create([
+            'name' => "Info des armes",
+            'code_snippet' => "func statsToString(weapon):
+		
+			if weapon == null:
+				weapon = self;
+		
+		
+			var message : Array[String];
+		
+			var msgName :   String = \"[b]\" + weapon.weaponName + \"[/b]\";
+			message.append(msgName);
+			var msgDamage : String = \"[b][color=orange][pulse]\" + str(weapon.damage.x) + \" - \" + str(weapon.damage.y) + \"[/pulse][/color][/b]\n\";
+			message.append(msgDamage);
+		
+			if weapon.shotNumber > 1:
+				var msgNum : String = \"[color=gray]Shoots \" + str(weapon.shotNumber) + \" bullets[/color]\";
+				message.append(msgNum);
+		
+		
+			var msgRangeAndRate : String = \"[color=gray]\"
+			if weapon.shotRange > 1.2:
+				msgRangeAndRate += \"Long range\";
+			elif weapon.shotRange >= 0.4:
+				msgRangeAndRate += \"Medium range\";
+			else:
+				msgRangeAndRate += \"Short range\"
+		
+			msgRangeAndRate += \", \";
+		
+			if weapon.fireRate < 0.1:
+				msgRangeAndRate += \"super-fast\";
+			elif weapon.fireRate <= 0.2:
+				msgRangeAndRate += \"fast\";
+			elif weapon.fireRate <= 0.8:
+				msgRangeAndRate += \"medium\";
+			else:
+				msgRangeAndRate += \"slow\"
+		
+			msgRangeAndRate += \" fire rate[/color]\"
+			message.push_back(msgRangeAndRate);
+		
+			if weapon.burstFire == true:
+				var msgBurstFire : String = \"[color=gray]Burst Fire[/color]\";
+				message.push_back(msgBurstFire);
+		
+		
+			message.push_back(\"\"); ## empty pushbacks to force a line break with the loop later
+		
+			if weapon.limitedAmmo > 0:
+				var msgAmmo : String = \"[color=crimson][pulse]Can only shoot \" + str(weapon.limitedAmmo) + \" time\" ;
+				if weapon.limitedAmmo > 1:
+					msgAmmo += \"s\";
+		
+				msgAmmo += \"[/pulse][/color]\"
+				message.push_back(msgAmmo);
+		
+			if weapon.creditCost > 0:
+				var msgCost : String = \"[color=crimson][pulse]Costs \" + str(weapon.creditCost) + \" credit\"
+				if weapon.creditCost > 1:
+					msgCost += \"s\";
+				msgCost += \" to fire\";
+				msgCost += \"[/pulse][/color]\"
+				message.push_back(msgCost);
+		
+			if weapon.glassWeapon == true:
+				var msgGlass : String = \"[color=crimson][pulse]Lost after being hit[/pulse][/color]\";
+				message.push_back(msgGlass);
+		
+			message.push_back(\"\");
+			if weapon.knockback > 0.5:
+				var msgknockBack : String = \"[color=goldenrod]High knockback[/color]\"
+				message.push_back(msgknockBack);
+		
+		
+			if weapon.turret == true:
+				var msgTurret : String = \"[color=goldenrod]Spawns an auto-shooting turret[/color]\";
+				message.push_back(msgTurret);
+		
+			if weapon.critRate > 0.0:
+				var msgCrit : String = \"[color=goldenrod]\" + str(int(round(weapon.critRate * 100))) + \"% to critical hit[/color]\";
+				message.push_back(msgCrit);
+		
+			if weapon.lifeSteal > 0.0:
+				var msgLifeSteal : String = \"[color=goldenrod]\" +  str(int(round(weapon.lifeSteal * 100))) + \"% life absorb[/color]\";
+				message.push_back(msgLifeSteal);
+		
+			if weapon.creditsRate != 1.0:
+				var msgCred : String = \"[color=goldenrod]\" + str(int(round(weapon.creditsRate * 100))) + \"% credits on kill[/color]\";
+				message.push_back(msgCred);
+		
+		
+			if weapon.homingShots == true:
+				var msgHoming : String = \"[color=goldenrod]Homing shots[/color]\";
+				message.push_back(msgHoming);
+		
+			if weapon.wobblyShots == true:
+				var msgHoming : String = \"[color=goldenrod]Drunk shots[/color]\";
+				message.push_back(msgHoming);
+		
+			if weapon.shotsFollowCursor == true:
+				var msgFollow : String = \"[color=goldenrod]Bullets follow cursor[/color]\";
+				message.push_back(msgFollow);
+		
+			if weapon.explodingShots == true:
+				var msgExplode : String = \"[color=goldenrod]Bullets explode[/color]\";
+				message.push_back(msgExplode);
+		
+		
+			if weapon.burningShots == true:
+				var msgBurning : String = \"[color=goldenrod]Burning shots[/color]\";
+				message.push_back(msgBurning);
+		
+		
+		
+		
+			if weapon.pierceAmount > 0:
+				var msgPierce : String = \"[color=goldenrod]Pierces \" + str(weapon.pierceAmount) + \" time\";
+				if weapon.pierceAmount > 1:
+					msgPierce += \"s\";
+		
+				msgPierce += \"[/color]\"
+				message.push_back(msgPierce);
+		
+			if weapon.splitAmount > 0:
+				var msgSplit: String = \"[color=goldenrod]Splits into \" + str(weapon.splitAmount) + \" bullet\";
+				if weapon.splitAmount > 1:
+					msgSplit += \"s\";
+		
+				msgSplit += \"[/color]\"
+				message.push_back(msgSplit);
+		
+			if weapon.bounceAmount > 0:
+				var msgBounce: String = \"[color=goldenrod]Bounces \" + str(weapon.splitAmount) + \" time\";
+				if weapon.bounceAmount > 1:
+					msgBounce += \"s\";
+		
+				msgBounce += \"[/color]\"
+				message.push_back(msgBounce);
+		
+			var output : String = \"\";
+			for i in message:
+				output += i + \"\n\";
+		
+			return output;",
+
+            'description' => "Ce code fait automatiquement une chaîne de caractères en fonction des stats de l'arme. Des balises internes à Godot sont utilisées, comme [b] ou [color=] ; elles sont similaires au BBCode. Le code est long et contient énormément de concaténations, mais quand il est utilisé en jeu il est déja entièrement formaté. Pratique !",
+
+            'url' => "/weapon-info",
+        ]);
+        Code::factory()->create([
+            'name' => "Effets de rotation",
+            'code_snippet' => "var funkyAngle = 0.00005;
+        var funkySize = 0.00015;
+        func funkyScale():
+
+            if rotation < -0.01 or rotation > 0.01:
+                funkyAngle *= -1.0;
+
+            if scale.x >= 1.02 or scale.x <= 0.98:
+                funkySize *= -1.0;
+
+
+            rotation += -funkyAngle;
+            scale = Vector2(scale.x + funkySize, scale.y + funkySize);",
+
+            'description' => "Ce code gère la rotation des effets d'UI, comme la barre de vie ou les crédits. Il fonctionne de manière très simple, mais fait un effet très convaincant avec très peu de ressources.",
+
+            'url' => "/rotation-effects",
+        ]);
+
+
+
     }
 }
